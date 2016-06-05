@@ -30,6 +30,8 @@ void setup(){
   myservo1.attach(5);// サーボ1信号用ピン
   myservo2.attach(6); // サーボ2信号用ピン
   val = 90;
+  myservo1.write(val);
+  myservo2.write(val);
 
   delay(2000); //起動直後にコントローラ触ると何故か操作受け付けなくなるからちょっと待つ
 
@@ -55,7 +57,6 @@ void setup(){
 }
 
 void loop(){
-  myservo1.write(speed);
 
   if(error == 1) //skip loop if no controller found
     return; 
