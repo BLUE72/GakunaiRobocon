@@ -13,12 +13,9 @@ int error = 0;
 byte type = 0;
 byte vibrate = 0;
 
-Servo myservo; //サーボ用のオブジェクトを作成
+Servo myservo1; //サーボ1用のオブジェクトを作成
+Servo myservo2; //サーボ2用のオブジェクトを作成
 int val; //サーボの角度を格納するための変数
-
-Servo myservo1;
-Servo myservo2;
-int speed = 50;//速度を0~90で指定
 
 void setup(){
   pinMode(7,OUTPUT); // モータ1信号用ピン
@@ -28,17 +25,11 @@ void setup(){
   pinMode(4,OUTPUT); // モータ2信号用ピン
 
   pinMode(14,OUTPUT); // モータ3信号用ピン
-  pinMode(15,OUTPUT); // モータ2信号用ピン
+  pinMode(15,OUTPUT); // モータ3信号用ピン
 
-  myservo.attach(6); // サーボ2信号用ピン
-  val = 90;
-  
   myservo1.attach(5);// サーボ1信号用ピン
-  speed = 90 + speed ;
-  /*
-  myservo2.attach(6);// サーボ2信号用ピン
-  speed = 90 - speed ;
-  */
+  myservo2.attach(6); // サーボ2信号用ピン
+  val = 90;
 
   delay(2000); //起動直後にコントローラ触ると何故か操作受け付けなくなるからちょっと待つ
 
@@ -186,14 +177,16 @@ void loop(){
   if(ps2x.Button(PSB_L1) && val <= 180)
   {
     val = val + 2 ;
-    myservo.write(val);
+    myservo1.write(val);
+    myservo2.write(180 - val);
     delay(5);
   }
 
   if(ps2x.Button(PSB_R1) && val >= 0)
   {
     val = val - 2 ;
-    myservo.write(val);
+    myservo1.write(val);
+    myservo2.write(180 - val);
     delay(5);
   }
 
