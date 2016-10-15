@@ -1,3 +1,5 @@
+//15行目以外触るな
+
 #include <PS2X_lib.h>  //for v1.6
 #include <Servo.h>
 
@@ -5,6 +7,16 @@
 #define PS2X_COM_DEBUG
 
 PS2X ps2x; // create PS2 Controller Class
+
+//********************************************
+
+//Example
+//int MoterPercentage = 100 ;
+int MoterPercentage = 60 ;
+//  ここの数値だけ変える↑↑
+//数値は20~100の間で
+
+//********************************************
 
 int error = 0; 
 byte type = 0;
@@ -87,7 +99,7 @@ void loop(){
   if(ps2x.Analog(PSS_LY) > 128)
   {
     Lstate = ps2x.Analog(PSS_LY);
-    speedM1 = (Lstate-128)*255/127;
+    speedM1 = (Lstate-128)*255*100/(127*MoterPercentage);
     digitalWrite(7,HIGH);
     digitalWrite(8,LOW);
     analogWrite(11,speedM1);
@@ -100,7 +112,7 @@ void loop(){
   if(ps2x.Analog(PSS_LY) < 128)
   {
     Lstate = ps2x.Analog(PSS_LY);
-    speedM1=(127-Lstate)*255/127;
+    speedM1=(127-Lstate)*255*100/(127*MoterPercentage);
     digitalWrite(7,LOW);
     digitalWrite(8,HIGH);
     analogWrite(11,speedM1);
@@ -109,7 +121,7 @@ void loop(){
   if(ps2x.Analog(PSS_RY) > 128)
   {
     Rstate = ps2x.Analog(PSS_RY);
-    speedM2 = (Rstate-128)*255/127;
+    speedM2 = (Rstate-128)*255*100/(127*MoterPercentage);
     digitalWrite(2,HIGH);
     digitalWrite(4,LOW);
     analogWrite(3,speedM2); 
@@ -122,7 +134,7 @@ void loop(){
   if(ps2x.Analog(PSS_RY) < 128)
   {
     Rstate = ps2x.Analog(PSS_RY);
-    speedM2=(127 - Rstate)*255/127;
+    speedM2=(127 - Rstate)*255*100/(127*MoterPercentage);
     digitalWrite(2,LOW);
     digitalWrite(4,HIGH);
     analogWrite(3,speedM2);
